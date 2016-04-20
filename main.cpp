@@ -9,7 +9,8 @@
 
 #include <iostream>
 #include <stdio.h>
-
+#include <stdlib.h>
+#include <time.h>
 #include "Slav.h"
 
 #define REPORT_ADAPTERS showMeAdapterSizes(queueOfSlavs,stackOfSlavs)
@@ -26,7 +27,7 @@ void adapters(Slav *, int);
 int main(int argc, char const *argv[])
 {
 	int n = 2 * atoi(argv[1]);
-	Slav *slavs = new Slav[n];
+	Slav *slavs = new Slav[n]=NULL;
 	cout << "# Generated Slavs" << endl;
 	for (int i = 0; i < n; ++i)
 		cout << slavs[i].description() << endl;
@@ -48,14 +49,31 @@ void containers(Slav * slavs, int n)
 	printf("## vector\n");
 
 	// Umieść Słowian w losowej kolejności w wektorze.
-
+	srand(time(NULL));
+	for(int i=0;i<n;i++)
+	{
+		Slav klatka=&slavs[rand()%n];
+		for(int k=0;k<i;k++)
+		{
+			if(klatka==vectorOfSlavs[k])
+				continue;
+			else 
+				vectorOfSlavs.push_back(klatka);
+		}
+	}
 	// Wykorzystując iterator i funkcję description(), wyświetl wszystkich Słowian w wektorze
+	for (int i=0;i<n;i++)
+			cout << vectorOfSlavs[i].description() << endl;
 
 	REPORT_CONTAINERS;
 	printf("## set\n");
 
 	// Przenieś wszystkich Słowian z wektoru do zbioru.
-	
+	for(int i=0;i<n;i++)
+	{
+		setOfSlavs.instert(vectorOfSlavs[i]);
+	}
+	vectorOfSlavs.clear();
 	REPORT_CONTAINERS;
 	printf("## map\n");
 
