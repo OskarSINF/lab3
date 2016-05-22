@@ -1,6 +1,7 @@
 #include "Slav.h"
 #include <fstream>
-
+#include <iterator>
+#include <string>
 using namespace std;
 
 vector <string> Slav::names;
@@ -18,12 +19,21 @@ void Slav::init()
 
 Slav::Slav()
 {
-	static int amountOfNames = (init(), names.size());
-	_name = names[rand() % amountOfNames];
-	_id = _counter++;
+	static int amountOfNames = (init(), names.size());  // Leniwe inicjowanie- obiekt tworzont jest jednorazowo( static) 
+	_name = names[rand() % amountOfNames];				// i w momencie, gdy jest on potrzebny- w dalszej czesci programu,			
+	_id = _counter++;									// gdy bedzie potrzebna ta wartosc nie bedzie ona obliczana jeszcze raz,
+														// ale zwaracany bedzie wynik obliczony za pierwszym razem	
 }
 
 string Slav::description()
 {
-	return string("  ") + _name + " [" + to_string(_id) + "]";
+	return string("  ") + _name + " [" + to_string(_id+1) +"]";
+}
+
+gender Slav::specifyTheGender()
+{
+	if(_name[_name.length()-1]=='a')
+		return female;
+	else 
+		return male;
 }
